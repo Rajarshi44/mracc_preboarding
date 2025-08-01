@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   CheckCircle,
   FileText,
@@ -9,8 +9,9 @@ import {
   Shield,
   Zap,
   Smartphone,
-} from "lucide-react"
-import Link from "next/link"
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -29,14 +30,24 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-5">
               <div className="relative group">
-                <div className="w-12 h-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300">
-                  <Building2 className="w-6 h-6 text-white" />
+                <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 p-1">
+                  <Image
+                    src="/mrac-logo.svg"
+                    alt="MRAC Logo"
+                    width={76}
+                    height={76}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-green-400 to-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">TechCorp</h1>
-                <p className="text-sm text-gray-500 font-medium">Employee Portal</p>
+                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+                  MRAC
+                </h1>
+                <p className="text-sm text-gray-500 font-medium">
+                  Employee Portal
+                </p>
               </div>
             </div>
             <Link href="/login">
@@ -72,8 +83,12 @@ export default function HomePage() {
 
             {/* Subtitle */}
             <p className="text-xl md:text-2xl lg:text-3xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-16 font-light">
-              Complete your preboarding journey in minutes. Get your temporary credentials instantly and join our{" "}
-              <span className="font-semibold text-gray-800">world-class team</span> with confidence.
+              Complete your preboarding journey in minutes. Get your temporary
+              credentials instantly and join our{" "}
+              <span className="font-semibold text-gray-800">
+                world-class team
+              </span>{" "}
+              with confidence.
             </p>
 
             {/* Enhanced CTA Buttons */}
@@ -104,14 +119,20 @@ export default function HomePage() {
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="font-medium">
-                  <span className="text-2xl font-bold text-gray-800">2,847</span> employees onboarded
+                  <span className="text-2xl font-bold text-gray-800">
+                    2,847
+                  </span>{" "}
+                  employees onboarded
                 </span>
               </div>
               <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                 <span className="font-medium">
-                  <span className="text-2xl font-bold text-gray-800">98.5%</span> satisfaction rate
+                  <span className="text-2xl font-bold text-gray-800">
+                    98.5%
+                  </span>{" "}
+                  satisfaction rate
                 </span>
               </div>
             </div>
@@ -131,14 +152,16 @@ export default function HomePage() {
               {
                 icon: CheckCircle,
                 title: "Instant Review",
-                description: "Our AI-powered system and HR team review your application within 2 hours, not days",
+                description:
+                  "Our AI-powered system and HR team review your application within 2 hours, not days",
                 color: "green",
                 number: "02",
               },
               {
                 icon: IdCard,
                 title: "Get Credentials",
-                description: "Receive your temporary employee ID and access information immediately upon approval",
+                description:
+                  "Receive your temporary employee ID and access information immediately upon approval",
                 color: "purple",
                 number: "03",
               },
@@ -148,7 +171,9 @@ export default function HomePage() {
                 <div className="relative text-center p-10 rounded-3xl hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-3 bg-white/40 backdrop-blur-sm border border-white/50">
                   {/* Step Number */}
                   <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-gray-600 font-bold text-lg">{step.number}</span>
+                    <span className="text-gray-600 font-bold text-lg">
+                      {step.number}
+                    </span>
                   </div>
 
                   {/* Icon */}
@@ -157,8 +182,8 @@ export default function HomePage() {
                       step.color === "blue"
                         ? "from-blue-50 to-indigo-100 border-blue-200"
                         : step.color === "green"
-                          ? "from-green-50 to-emerald-100 border-green-200"
-                          : "from-purple-50 to-violet-100 border-purple-200"
+                        ? "from-green-50 to-emerald-100 border-green-200"
+                        : "from-purple-50 to-violet-100 border-purple-200"
                     } border-2 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-all duration-500 shadow-xl`}
                   >
                     <step.icon
@@ -166,15 +191,19 @@ export default function HomePage() {
                         step.color === "blue"
                           ? "text-blue-600"
                           : step.color === "green"
-                            ? "text-green-600"
-                            : "text-purple-600"
+                          ? "text-green-600"
+                          : "text-purple-600"
                       }`}
                     />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">{step.title}</h3>
-                  <p className="text-gray-600 leading-relaxed text-lg font-medium">{step.description}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed text-lg font-medium">
+                    {step.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -186,9 +215,12 @@ export default function HomePage() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-green-100/30 to-blue-100/30 rounded-full blur-3xl"></div>
 
             <div className="relative text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Why Choose Our Platform?</h2>
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                Why Choose Our Platform?
+              </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto font-light">
-                Experience the most advanced onboarding platform designed for the modern workplace
+                Experience the most advanced onboarding platform designed for
+                the modern workplace
               </p>
             </div>
 
@@ -197,19 +229,22 @@ export default function HomePage() {
                 {
                   icon: Shield,
                   title: "Enterprise Security",
-                  description: "Military-grade encryption and SOC 2 compliance protect your data",
+                  description:
+                    "Military-grade encryption and SOC 2 compliance protect your data",
                   gradient: "from-blue-500 to-blue-600",
                 },
                 {
                   icon: Zap,
                   title: "Lightning Fast",
-                  description: "AI-powered processing delivers results in under 2 hours",
+                  description:
+                    "AI-powered processing delivers results in under 2 hours",
                   gradient: "from-green-500 to-green-600",
                 },
                 {
                   icon: Smartphone,
                   title: "Mobile First",
-                  description: "Seamless experience across all devices with offline support",
+                  description:
+                    "Seamless experience across all devices with offline support",
                   gradient: "from-purple-500 to-purple-600",
                 },
               ].map((feature, index) => (
@@ -219,8 +254,12 @@ export default function HomePage() {
                   >
                     <feature.icon className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed font-medium">{feature.description}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed font-medium">
+                    {feature.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -233,18 +272,26 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-5 mb-8">
-              <div className="w-12 h-12 bg-gradient-to-br from-gray-900 to-gray-700 rounded-2xl flex items-center justify-center shadow-xl">
-                <Building2 className="w-6 h-6 text-white" />
+              <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-xl p-1">
+                <Image
+                  src="/mrac-logo.svg"
+                  alt="MRAC Logo"
+                  width={76}
+                  height={76}
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="text-3xl font-bold text-gray-900">TechCorp</span>
+              <span className="text-3xl font-bold text-gray-900">MRAC</span>
             </div>
-            <p className="text-gray-500 mb-8 text-lg">&copy; 2024 TechCorp. All rights reserved.</p>
+            <p className="text-gray-500 mb-8 text-lg">
+              &copy; 2024 MRAC. All rights reserved.
+            </p>
             <div className="flex items-center justify-center space-x-8 text-base">
               <a
-                href="mailto:hr@techcorp.com"
+                href="mailto:hr@MRAC.com"
                 className="text-gray-600 hover:text-gray-900 font-semibold transition-colors duration-200 hover:underline"
               >
-                hr@techcorp.com
+                hr@MRAC.com
               </a>
               <span className="text-gray-300">•</span>
               <a
@@ -265,5 +312,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

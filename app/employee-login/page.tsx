@@ -1,13 +1,19 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Progress } from "@/components/ui/progress"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
 import {
   ArrowLeft,
   Building2,
@@ -22,21 +28,23 @@ import {
   X,
   AlertCircle,
   KeyRound,
-} from "lucide-react"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+} from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface PasswordStrength {
-  score: number
-  feedback: string[]
-  color: string
-  label: string
+  score: number;
+  feedback: string[];
+  color: string;
+  label: string;
 }
 
 export default function EmployeeLoginPage() {
-  const router = useRouter()
-  const [mode, setMode] = useState<"login" | "signup" | "forgot" | "verify">("login")
+  const router = useRouter();
+  const [mode, setMode] = useState<"login" | "signup" | "forgot" | "verify">(
+    "login"
+  );
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -45,18 +53,18 @@ export default function EmployeeLoginPage() {
     confirmPassword: "",
     verificationCode: "",
     agreedToTerms: false,
-  })
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [passwordStrength, setPasswordStrength] = useState<PasswordStrength>({
     score: 0,
     feedback: [],
     color: "bg-gray-200",
     label: "Enter a password",
-  })
+  });
 
   const calculatePasswordStrength = (password: string): PasswordStrength => {
     if (!password) {
@@ -65,146 +73,151 @@ export default function EmployeeLoginPage() {
         feedback: [],
         color: "bg-gray-200",
         label: "Enter a password",
-      }
+      };
     }
 
-    let score = 0
-    const feedback: string[] = []
+    let score = 0;
+    const feedback: string[] = [];
 
     // Length check
     if (password.length >= 8) {
-      score += 25
+      score += 25;
     } else {
-      feedback.push("At least 8 characters")
+      feedback.push("At least 8 characters");
     }
 
     // Uppercase check
     if (/[A-Z]/.test(password)) {
-      score += 25
+      score += 25;
     } else {
-      feedback.push("One uppercase letter")
+      feedback.push("One uppercase letter");
     }
 
     // Lowercase check
     if (/[a-z]/.test(password)) {
-      score += 25
+      score += 25;
     } else {
-      feedback.push("One lowercase letter")
+      feedback.push("One lowercase letter");
     }
 
     // Number or special character check
     if (/[\d\W]/.test(password)) {
-      score += 25
+      score += 25;
     } else {
-      feedback.push("One number or special character")
+      feedback.push("One number or special character");
     }
 
-    let color = "bg-red-500"
-    let label = "Weak"
+    let color = "bg-red-500";
+    let label = "Weak";
 
     if (score >= 75) {
-      color = "bg-green-500"
-      label = "Strong"
+      color = "bg-green-500";
+      label = "Strong";
     } else if (score >= 50) {
-      color = "bg-yellow-500"
-      label = "Medium"
+      color = "bg-yellow-500";
+      label = "Medium";
     } else if (score >= 25) {
-      color = "bg-orange-500"
-      label = "Fair"
+      color = "bg-orange-500";
+      label = "Fair";
     }
 
-    return { score, feedback, color, label }
-  }
+    return { score, feedback, color, label };
+  };
 
   useEffect(() => {
     if (mode === "signup") {
-      setPasswordStrength(calculatePasswordStrength(formData.password))
+      setPasswordStrength(calculatePasswordStrength(formData.password));
     }
-  }, [formData.password, mode])
+  }, [formData.password, mode]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
-    setSuccess("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+    setSuccess("");
 
     // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     if (mode === "signup") {
       // Signup validation
       if (formData.password !== formData.confirmPassword) {
-        setError("Passwords do not match.")
-        setIsLoading(false)
-        return
+        setError("Passwords do not match.");
+        setIsLoading(false);
+        return;
       }
       if (passwordStrength.score < 50) {
-        setError("Please choose a stronger password.")
-        setIsLoading(false)
-        return
+        setError("Please choose a stronger password.");
+        setIsLoading(false);
+        return;
       }
       if (!formData.firstName || !formData.lastName) {
-        setError("Please enter your first and last name.")
-        setIsLoading(false)
-        return
+        setError("Please enter your first and last name.");
+        setIsLoading(false);
+        return;
       }
       if (!formData.agreedToTerms) {
-        setError("Please agree to the terms and conditions.")
-        setIsLoading(false)
-        return
+        setError("Please agree to the terms and conditions.");
+        setIsLoading(false);
+        return;
       }
 
       // Simulate successful signup - send verification email
-      setMode("verify")
-      setSuccess(`Verification code sent to ${formData.email}`)
+      setMode("verify");
+      setSuccess(`Verification code sent to ${formData.email}`);
     } else if (mode === "verify") {
       // Email verification
       if (formData.verificationCode.length !== 6) {
-        setError("Please enter the 6-digit verification code.")
-        setIsLoading(false)
-        return
+        setError("Please enter the 6-digit verification code.");
+        setIsLoading(false);
+        return;
       }
 
       // Simulate successful verification
-      localStorage.setItem("employeeAuth", "true")
-      localStorage.setItem("employeeEmail", formData.email)
-      localStorage.setItem("employeeName", `${formData.firstName} ${formData.lastName}`)
-      router.push("/preboard")
+      localStorage.setItem("employeeAuth", "true");
+      localStorage.setItem("employeeEmail", formData.email);
+      localStorage.setItem(
+        "employeeName",
+        `${formData.firstName} ${formData.lastName}`
+      );
+      router.push("/preboard");
     } else if (mode === "forgot") {
       // Forgot password
       if (!formData.email) {
-        setError("Please enter your email address.")
-        setIsLoading(false)
-        return
+        setError("Please enter your email address.");
+        setIsLoading(false);
+        return;
       }
 
-      setSuccess(`Password reset instructions sent to ${formData.email}`)
+      setSuccess(`Password reset instructions sent to ${formData.email}`);
       setTimeout(() => {
-        setMode("login")
-        setSuccess("")
-      }, 3000)
+        setMode("login");
+        setSuccess("");
+      }, 3000);
     } else {
       // Login validation
       if (formData.email && formData.password.length >= 6) {
-        localStorage.setItem("employeeAuth", "true")
-        localStorage.setItem("employeeEmail", formData.email)
-        router.push("/preboard")
+        localStorage.setItem("employeeAuth", "true");
+        localStorage.setItem("employeeEmail", formData.email);
+        router.push("/preboard");
       } else {
-        setError("Please enter a valid email and password (minimum 6 characters).")
+        setError(
+          "Please enter a valid email and password (minimum 6 characters)."
+        );
       }
     }
 
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-    if (error) setError("")
-    if (success && mode !== "verify") setSuccess("")
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (error) setError("");
+    if (success && mode !== "verify") setSuccess("");
+  };
 
   const switchMode = (newMode: "login" | "signup" | "forgot") => {
-    setMode(newMode)
+    setMode(newMode);
     setFormData({
       firstName: "",
       lastName: "",
@@ -213,58 +226,58 @@ export default function EmployeeLoginPage() {
       confirmPassword: "",
       verificationCode: "",
       agreedToTerms: false,
-    })
-    setError("")
-    setSuccess("")
-    setShowPassword(false)
-    setShowConfirmPassword(false)
-  }
+    });
+    setError("");
+    setSuccess("");
+    setShowPassword(false);
+    setShowConfirmPassword(false);
+  };
 
   const resendVerificationCode = async () => {
-    setIsLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setSuccess(`New verification code sent to ${formData.email}`)
-    setIsLoading(false)
-  }
+    setIsLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSuccess(`New verification code sent to ${formData.email}`);
+    setIsLoading(false);
+  };
 
   const getTitle = () => {
     switch (mode) {
       case "signup":
-        return "Create Account"
+        return "Create Account";
       case "forgot":
-        return "Reset Password"
+        return "Reset Password";
       case "verify":
-        return "Verify Email"
+        return "Verify Email";
       default:
-        return "Employee Login"
+        return "Employee Login";
     }
-  }
+  };
 
   const getSubtitle = () => {
     switch (mode) {
       case "signup":
-        return "Join TechCorp and start your preboarding journey"
+        return "Join MRAC and start your preboarding journey";
       case "forgot":
-        return "Enter your email to receive reset instructions"
+        return "Enter your email to receive reset instructions";
       case "verify":
-        return "Enter the 6-digit code sent to your email"
+        return "Enter the 6-digit code sent to your email";
       default:
-        return "Sign in to start your preboarding journey"
+        return "Sign in to start your preboarding journey";
     }
-  }
+  };
 
   const getIcon = () => {
     switch (mode) {
       case "signup":
-        return <UserPlus className="w-10 h-10 text-white" />
+        return <UserPlus className="w-10 h-10 text-white" />;
       case "forgot":
-        return <KeyRound className="w-10 h-10 text-white" />
+        return <KeyRound className="w-10 h-10 text-white" />;
       case "verify":
-        return <Mail className="w-10 h-10 text-white" />
+        return <Mail className="w-10 h-10 text-white" />;
       default:
-        return <User className="w-10 h-10 text-white" />
+        return <User className="w-10 h-10 text-white" />;
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 relative overflow-hidden">
@@ -287,8 +300,12 @@ export default function EmployeeLoginPage() {
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-green-400 to-green-500 rounded-full border-2 border-white shadow-sm animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">TechCorp</h1>
-                <p className="text-sm text-gray-500 font-medium">Employee Portal</p>
+                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+                  MRAC
+                </h1>
+                <p className="text-sm text-gray-500 font-medium">
+                  Employee Portal
+                </p>
               </div>
             </div>
             <Link href="/">
@@ -311,7 +328,9 @@ export default function EmployeeLoginPage() {
             <div className="w-20 h-20 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
               {getIcon()}
             </div>
-            <h2 className="text-4xl font-light text-gray-900 mb-4">{getTitle()}</h2>
+            <h2 className="text-4xl font-light text-gray-900 mb-4">
+              {getTitle()}
+            </h2>
             <p className="text-xl text-gray-600 font-light">{getSubtitle()}</p>
           </div>
 
@@ -321,16 +340,20 @@ export default function EmployeeLoginPage() {
 
             <CardHeader className="relative pb-8">
               <CardTitle className="text-2xl font-semibold text-gray-900">
-                {mode === "verify" ? "Check Your Email" : mode === "forgot" ? "Forgot Password?" : "Welcome"}
+                {mode === "verify"
+                  ? "Check Your Email"
+                  : mode === "forgot"
+                  ? "Forgot Password?"
+                  : "Welcome"}
               </CardTitle>
               <CardDescription className="text-gray-600 text-lg">
                 {mode === "verify"
                   ? `We sent a verification code to ${formData.email}`
                   : mode === "forgot"
-                    ? "We'll send you instructions to reset your password"
-                    : mode === "signup"
-                      ? "Create your account to access the preboarding form"
-                      : "Enter your credentials to access the preboarding form"}
+                  ? "We'll send you instructions to reset your password"
+                  : mode === "signup"
+                  ? "Create your account to access the preboarding form"
+                  : "Enter your credentials to access the preboarding form"}
               </CardDescription>
             </CardHeader>
 
@@ -340,7 +363,10 @@ export default function EmployeeLoginPage() {
                 {mode === "verify" && (
                   <div className="space-y-4">
                     <div className="space-y-3">
-                      <Label htmlFor="verificationCode" className="text-sm font-semibold text-gray-700">
+                      <Label
+                        htmlFor="verificationCode"
+                        className="text-sm font-semibold text-gray-700"
+                      >
                         Verification Code
                       </Label>
                       <Input
@@ -349,13 +375,20 @@ export default function EmployeeLoginPage() {
                         required
                         maxLength={6}
                         value={formData.verificationCode}
-                        onChange={(e) => handleInputChange("verificationCode", e.target.value.replace(/\D/g, ""))}
+                        onChange={(e) =>
+                          handleInputChange(
+                            "verificationCode",
+                            e.target.value.replace(/\D/g, "")
+                          )
+                        }
                         className="text-center text-2xl font-mono tracking-widest border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-16 rounded-xl transition-all duration-200 bg-white/70"
                         placeholder="000000"
                       />
                     </div>
                     <div className="text-center">
-                      <p className="text-sm text-gray-600 mb-2">Didn't receive the code?</p>
+                      <p className="text-sm text-gray-600 mb-2">
+                        Didn't receive the code?
+                      </p>
                       <Button
                         type="button"
                         variant="ghost"
@@ -372,7 +405,10 @@ export default function EmployeeLoginPage() {
                 {/* Forgot Password Mode */}
                 {mode === "forgot" && (
                   <div className="space-y-3">
-                    <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
+                    <Label
+                      htmlFor="email"
+                      className="text-sm font-semibold text-gray-700"
+                    >
                       Email Address
                     </Label>
                     <div className="relative">
@@ -382,7 +418,9 @@ export default function EmployeeLoginPage() {
                         type="email"
                         required
                         value={formData.email}
-                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        onChange={(e) =>
+                          handleInputChange("email", e.target.value)
+                        }
                         className="pl-12 border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-14 rounded-xl text-lg transition-all duration-200 bg-white/70"
                         placeholder="your.email@company.com"
                       />
@@ -396,7 +434,10 @@ export default function EmployeeLoginPage() {
                     {mode === "signup" && (
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-3">
-                          <Label htmlFor="firstName" className="text-sm font-semibold text-gray-700">
+                          <Label
+                            htmlFor="firstName"
+                            className="text-sm font-semibold text-gray-700"
+                          >
                             First Name
                           </Label>
                           <Input
@@ -404,13 +445,18 @@ export default function EmployeeLoginPage() {
                             type="text"
                             required
                             value={formData.firstName}
-                            onChange={(e) => handleInputChange("firstName", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("firstName", e.target.value)
+                            }
                             className="border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-12 rounded-xl transition-all duration-200 bg-white/70"
                             placeholder="John"
                           />
                         </div>
                         <div className="space-y-3">
-                          <Label htmlFor="lastName" className="text-sm font-semibold text-gray-700">
+                          <Label
+                            htmlFor="lastName"
+                            className="text-sm font-semibold text-gray-700"
+                          >
                             Last Name
                           </Label>
                           <Input
@@ -418,7 +464,9 @@ export default function EmployeeLoginPage() {
                             type="text"
                             required
                             value={formData.lastName}
-                            onChange={(e) => handleInputChange("lastName", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange("lastName", e.target.value)
+                            }
                             className="border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-12 rounded-xl transition-all duration-200 bg-white/70"
                             placeholder="Doe"
                           />
@@ -427,7 +475,10 @@ export default function EmployeeLoginPage() {
                     )}
 
                     <div className="space-y-3">
-                      <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
+                      <Label
+                        htmlFor="email"
+                        className="text-sm font-semibold text-gray-700"
+                      >
                         Email Address
                       </Label>
                       <div className="relative">
@@ -437,7 +488,9 @@ export default function EmployeeLoginPage() {
                           type="email"
                           required
                           value={formData.email}
-                          onChange={(e) => handleInputChange("email", e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange("email", e.target.value)
+                          }
                           className="pl-12 border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-14 rounded-xl text-lg transition-all duration-200 bg-white/70"
                           placeholder="your.email@company.com"
                         />
@@ -445,7 +498,10 @@ export default function EmployeeLoginPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <Label htmlFor="password" className="text-sm font-semibold text-gray-700">
+                      <Label
+                        htmlFor="password"
+                        className="text-sm font-semibold text-gray-700"
+                      >
                         Password
                       </Label>
                       <div className="relative">
@@ -455,16 +511,26 @@ export default function EmployeeLoginPage() {
                           type={showPassword ? "text" : "password"}
                           required
                           value={formData.password}
-                          onChange={(e) => handleInputChange("password", e.target.value)}
+                          onChange={(e) =>
+                            handleInputChange("password", e.target.value)
+                          }
                           className="pl-12 pr-12 border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-14 rounded-xl text-lg transition-all duration-200 bg-white/70"
-                          placeholder={mode === "signup" ? "Create a strong password" : "Enter your password"}
+                          placeholder={
+                            mode === "signup"
+                              ? "Create a strong password"
+                              : "Enter your password"
+                          }
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
                         >
-                          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          {showPassword ? (
+                            <EyeOff className="w-5 h-5" />
+                          ) : (
+                            <Eye className="w-5 h-5" />
+                          )}
                         </button>
                       </div>
 
@@ -472,16 +538,29 @@ export default function EmployeeLoginPage() {
                       {mode === "signup" && formData.password && (
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-medium text-gray-600">Password Strength</span>
-                            <span className={`text-xs font-semibold ${passwordStrength.color.replace("bg-", "text-")}`}>
+                            <span className="text-xs font-medium text-gray-600">
+                              Password Strength
+                            </span>
+                            <span
+                              className={`text-xs font-semibold ${passwordStrength.color.replace(
+                                "bg-",
+                                "text-"
+                              )}`}
+                            >
                               {passwordStrength.label}
                             </span>
                           </div>
-                          <Progress value={passwordStrength.score} className="h-2" />
+                          <Progress
+                            value={passwordStrength.score}
+                            className="h-2"
+                          />
                           {passwordStrength.feedback.length > 0 && (
                             <div className="space-y-1">
                               {passwordStrength.feedback.map((item, index) => (
-                                <div key={index} className="flex items-center space-x-2 text-xs text-gray-600">
+                                <div
+                                  key={index}
+                                  className="flex items-center space-x-2 text-xs text-gray-600"
+                                >
                                   <X className="w-3 h-3 text-red-500" />
                                   <span>{item}</span>
                                 </div>
@@ -494,7 +573,10 @@ export default function EmployeeLoginPage() {
 
                     {mode === "signup" && (
                       <div className="space-y-3">
-                        <Label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-700">
+                        <Label
+                          htmlFor="confirmPassword"
+                          className="text-sm font-semibold text-gray-700"
+                        >
                           Confirm Password
                         </Label>
                         <div className="relative">
@@ -504,30 +586,43 @@ export default function EmployeeLoginPage() {
                             type={showConfirmPassword ? "text" : "password"}
                             required
                             value={formData.confirmPassword}
-                            onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                            onChange={(e) =>
+                              handleInputChange(
+                                "confirmPassword",
+                                e.target.value
+                              )
+                            }
                             className="pl-12 pr-12 border-gray-200 focus:border-blue-400 focus:ring-blue-400 h-14 rounded-xl text-lg transition-all duration-200 bg-white/70"
                             placeholder="Confirm your password"
                           />
                           <button
                             type="button"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            onClick={() =>
+                              setShowConfirmPassword(!showConfirmPassword)
+                            }
                             className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
                           >
-                            {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                            {showConfirmPassword ? (
+                              <EyeOff className="w-5 h-5" />
+                            ) : (
+                              <Eye className="w-5 h-5" />
+                            )}
                           </button>
                         </div>
-                        {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                          <div className="flex items-center space-x-2 text-xs text-red-600">
-                            <X className="w-3 h-3" />
-                            <span>Passwords do not match</span>
-                          </div>
-                        )}
-                        {formData.confirmPassword && formData.password === formData.confirmPassword && (
-                          <div className="flex items-center space-x-2 text-xs text-green-600">
-                            <Check className="w-3 h-3" />
-                            <span>Passwords match</span>
-                          </div>
-                        )}
+                        {formData.confirmPassword &&
+                          formData.password !== formData.confirmPassword && (
+                            <div className="flex items-center space-x-2 text-xs text-red-600">
+                              <X className="w-3 h-3" />
+                              <span>Passwords do not match</span>
+                            </div>
+                          )}
+                        {formData.confirmPassword &&
+                          formData.password === formData.confirmPassword && (
+                            <div className="flex items-center space-x-2 text-xs text-green-600">
+                              <Check className="w-3 h-3" />
+                              <span>Passwords match</span>
+                            </div>
+                          )}
                       </div>
                     )}
 
@@ -538,7 +633,9 @@ export default function EmployeeLoginPage() {
                           <Checkbox
                             id="terms"
                             checked={formData.agreedToTerms}
-                            onCheckedChange={(checked) => handleInputChange("agreedToTerms", checked)}
+                            onCheckedChange={(checked) =>
+                              handleInputChange("agreedToTerms", checked)
+                            }
                             className="border-gray-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-1"
                           />
                           <div className="space-y-1">
@@ -547,17 +644,23 @@ export default function EmployeeLoginPage() {
                               className="text-sm font-medium text-gray-700 leading-relaxed cursor-pointer"
                             >
                               I agree to the{" "}
-                              <a href="#" className="text-blue-600 hover:text-blue-700 underline">
+                              <a
+                                href="#"
+                                className="text-blue-600 hover:text-blue-700 underline"
+                              >
                                 Terms of Service
                               </a>{" "}
                               and{" "}
-                              <a href="#" className="text-blue-600 hover:text-blue-700 underline">
+                              <a
+                                href="#"
+                                className="text-blue-600 hover:text-blue-700 underline"
+                              >
                                 Privacy Policy
                               </a>
                             </Label>
                             <p className="text-xs text-gray-500 leading-relaxed">
-                              By creating an account, you agree to our terms and acknowledge that you have read our
-                              privacy policy.
+                              By creating an account, you agree to our terms and
+                              acknowledge that you have read our privacy policy.
                             </p>
                           </div>
                         </div>
@@ -571,7 +674,9 @@ export default function EmployeeLoginPage() {
                   <div className="bg-red-50 border border-red-200 rounded-xl p-4 animate-in slide-in-from-top-2 duration-300">
                     <div className="flex items-center space-x-2">
                       <AlertCircle className="w-4 h-4 text-red-600" />
-                      <p className="text-red-700 text-sm font-medium">{error}</p>
+                      <p className="text-red-700 text-sm font-medium">
+                        {error}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -580,7 +685,9 @@ export default function EmployeeLoginPage() {
                   <div className="bg-green-50 border border-green-200 rounded-xl p-4 animate-in slide-in-from-top-2 duration-300">
                     <div className="flex items-center space-x-2">
                       <Check className="w-4 h-4 text-green-600" />
-                      <p className="text-green-700 text-sm font-medium">{success}</p>
+                      <p className="text-green-700 text-sm font-medium">
+                        {success}
+                      </p>
                     </div>
                   </div>
                 )}
@@ -589,7 +696,9 @@ export default function EmployeeLoginPage() {
                 <Button
                   type="submit"
                   className="w-full bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 hover:from-blue-700 hover:via-blue-800 hover:to-purple-800 text-white h-14 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]"
-                  disabled={isLoading || (mode === "signup" && !formData.agreedToTerms)}
+                  disabled={
+                    isLoading || (mode === "signup" && !formData.agreedToTerms)
+                  }
                 >
                   {isLoading ? (
                     <div className="flex items-center space-x-3">
@@ -598,10 +707,10 @@ export default function EmployeeLoginPage() {
                         {mode === "verify"
                           ? "Verifying..."
                           : mode === "forgot"
-                            ? "Sending..."
-                            : mode === "signup"
-                              ? "Creating Account..."
-                              : "Signing in..."}
+                          ? "Sending..."
+                          : mode === "signup"
+                          ? "Creating Account..."
+                          : "Signing in..."}
                       </span>
                     </div>
                   ) : (
@@ -609,10 +718,10 @@ export default function EmployeeLoginPage() {
                       {mode === "verify"
                         ? "Verify & Continue"
                         : mode === "forgot"
-                          ? "Send Reset Instructions"
-                          : mode === "signup"
-                            ? "Create Account"
-                            : "Continue to Application"}
+                        ? "Send Reset Instructions"
+                        : mode === "signup"
+                        ? "Create Account"
+                        : "Continue to Application"}
                     </span>
                   )}
                 </Button>
@@ -624,7 +733,9 @@ export default function EmployeeLoginPage() {
                   {mode === "login" && (
                     <>
                       <div>
-                        <p className="text-gray-600 mb-2">Don't have an account?</p>
+                        <p className="text-gray-600 mb-2">
+                          Don't have an account?
+                        </p>
                         <Button
                           type="button"
                           variant="ghost"
@@ -649,7 +760,9 @@ export default function EmployeeLoginPage() {
 
                   {mode === "signup" && (
                     <div>
-                      <p className="text-gray-600 mb-2">Already have an account?</p>
+                      <p className="text-gray-600 mb-2">
+                        Already have an account?
+                      </p>
                       <Button
                         type="button"
                         variant="ghost"
@@ -663,7 +776,9 @@ export default function EmployeeLoginPage() {
 
                   {mode === "forgot" && (
                     <div>
-                      <p className="text-gray-600 mb-2">Remember your password?</p>
+                      <p className="text-gray-600 mb-2">
+                        Remember your password?
+                      </p>
                       <Button
                         type="button"
                         variant="ghost"
@@ -690,8 +805,8 @@ export default function EmployeeLoginPage() {
                         {mode === "signup"
                           ? "Use any valid email and create a password to continue"
                           : mode === "forgot"
-                            ? "Enter any email to simulate password reset"
-                            : "Use any email and password (6+ characters) to continue"}
+                          ? "Enter any email to simulate password reset"
+                          : "Use any email and password (6+ characters) to continue"}
                       </p>
                       <p className="text-blue-600 text-xs font-mono bg-blue-100 px-3 py-1 rounded">
                         Example: demo@company.com / password123
@@ -707,7 +822,7 @@ export default function EmployeeLoginPage() {
             <p className="text-sm text-gray-500">
               Need help accessing your account?{" "}
               <a
-                href="mailto:support@techcorp.com"
+                href="mailto:support@MRAC.com"
                 className="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200 hover:underline"
               >
                 Contact IT Support
@@ -717,5 +832,5 @@ export default function EmployeeLoginPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

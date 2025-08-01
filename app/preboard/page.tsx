@@ -1,21 +1,33 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ArrowLeft, Upload, User, Briefcase, Phone } from "lucide-react"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowLeft, Upload, User, Briefcase, Phone } from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function PreboardPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -30,22 +42,22 @@ export default function PreboardPage() {
     ssn: "",
     dateOfBirth: "",
     agreed: false,
-  })
+  });
 
   useEffect(() => {
     // Check if user is authenticated as employee
-    const isAuthenticated = localStorage.getItem("employeeAuth")
+    const isAuthenticated = localStorage.getItem("employeeAuth");
     if (!isAuthenticated) {
-      router.push("/employee-login")
-      return
+      router.push("/employee-login");
+      return;
     }
-  }, [router])
+  }, [router]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Generate temporary ID
-    const tempId = `TEMP-${Date.now().toString().slice(-6)}`
+    const tempId = `TEMP-${Date.now().toString().slice(-6)}`;
 
     // Store data in localStorage (in a real app, this would be sent to a server)
     const employeeData = {
@@ -53,17 +65,17 @@ export default function PreboardPage() {
       tempId,
       status: "pending",
       submittedAt: new Date().toISOString(),
-    }
+    };
 
-    localStorage.setItem("employeeData", JSON.stringify(employeeData))
+    localStorage.setItem("employeeData", JSON.stringify(employeeData));
 
     // Redirect to status page
-    router.push(`/status?id=${tempId}`)
-  }
+    router.push(`/status?id=${tempId}`);
+  };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
@@ -82,7 +94,9 @@ export default function PreboardPage() {
               </Button>
             </Link>
             <div>
-              <h1 className="text-lg font-semibold text-gray-900">Employee Preboarding</h1>
+              <h1 className="text-lg font-semibold text-gray-900">
+                Employee Preboarding
+              </h1>
               <p className="text-sm text-gray-500">Complete your application</p>
             </div>
           </div>
@@ -99,38 +113,55 @@ export default function PreboardPage() {
                   <User className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-semibold text-gray-900">Personal Information</CardTitle>
-                  <CardDescription className="text-gray-600">Your basic personal details</CardDescription>
+                  <CardTitle className="text-xl font-semibold text-gray-900">
+                    Personal Information
+                  </CardTitle>
+                  <CardDescription className="text-gray-600">
+                    Your basic personal details
+                  </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="firstName"
+                  className="text-sm font-medium text-gray-700"
+                >
                   First Name
                 </Label>
                 <Input
                   id="firstName"
                   required
                   value={formData.firstName}
-                  onChange={(e) => handleInputChange("firstName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("firstName", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="lastName"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Last Name
                 </Label>
                 <Input
                   id="lastName"
                   required
                   value={formData.lastName}
-                  onChange={(e) => handleInputChange("lastName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("lastName", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Email Address
                 </Label>
                 <Input
@@ -143,7 +174,10 @@ export default function PreboardPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="phone"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Phone Number
                 </Label>
                 <Input
@@ -156,7 +190,10 @@ export default function PreboardPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="dateOfBirth" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="dateOfBirth"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Date of Birth
                 </Label>
                 <Input
@@ -164,12 +201,17 @@ export default function PreboardPage() {
                   type="date"
                   required
                   value={formData.dateOfBirth}
-                  onChange={(e) => handleInputChange("dateOfBirth", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("dateOfBirth", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="ssn" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="ssn"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Social Security Number
                 </Label>
                 <Input
@@ -183,7 +225,10 @@ export default function PreboardPage() {
                 />
               </div>
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="address" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="address"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Home Address
                 </Label>
                 <Textarea
@@ -206,29 +251,45 @@ export default function PreboardPage() {
                   <Briefcase className="w-5 h-5 text-green-600" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-semibold text-gray-900">Employment Information</CardTitle>
-                  <CardDescription className="text-gray-600">Position and department details</CardDescription>
+                  <CardTitle className="text-xl font-semibold text-gray-900">
+                    Employment Information
+                  </CardTitle>
+                  <CardDescription className="text-gray-600">
+                    Position and department details
+                  </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="position" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="position"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Position
                 </Label>
                 <Input
                   id="position"
                   required
                   value={formData.position}
-                  onChange={(e) => handleInputChange("position", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("position", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="department" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="department"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Department
                 </Label>
-                <Select onValueChange={(value) => handleInputChange("department", value)}>
+                <Select
+                  onValueChange={(value) =>
+                    handleInputChange("department", value)
+                  }
+                >
                   <SelectTrigger className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200">
                     <SelectValue placeholder="Select department" />
                   </SelectTrigger>
@@ -243,7 +304,10 @@ export default function PreboardPage() {
                 </Select>
               </div>
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="startDate" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="startDate"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Expected Start Date
                 </Label>
                 <Input
@@ -251,7 +315,9 @@ export default function PreboardPage() {
                   type="date"
                   required
                   value={formData.startDate}
-                  onChange={(e) => handleInputChange("startDate", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("startDate", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
@@ -266,26 +332,38 @@ export default function PreboardPage() {
                   <Phone className="w-5 h-5 text-orange-600" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-semibold text-gray-900">Emergency Contact</CardTitle>
-                  <CardDescription className="text-gray-600">Emergency contact information</CardDescription>
+                  <CardTitle className="text-xl font-semibold text-gray-900">
+                    Emergency Contact
+                  </CardTitle>
+                  <CardDescription className="text-gray-600">
+                    Emergency contact information
+                  </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="emergencyContact" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="emergencyContact"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Contact Name
                 </Label>
                 <Input
                   id="emergencyContact"
                   required
                   value={formData.emergencyContact}
-                  onChange={(e) => handleInputChange("emergencyContact", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("emergencyContact", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="emergencyPhone" className="text-sm font-medium text-gray-700">
+                <Label
+                  htmlFor="emergencyPhone"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Contact Phone
                 </Label>
                 <Input
@@ -293,7 +371,9 @@ export default function PreboardPage() {
                   type="tel"
                   required
                   value={formData.emergencyPhone}
-                  onChange={(e) => handleInputChange("emergencyPhone", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("emergencyPhone", e.target.value)
+                  }
                   className="border-gray-200 focus:border-gray-400 focus:ring-gray-400 h-11 rounded-lg transition-all duration-200"
                 />
               </div>
@@ -308,8 +388,12 @@ export default function PreboardPage() {
                   <Upload className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-semibold text-gray-900">Required Documents</CardTitle>
-                  <CardDescription className="text-gray-600">Upload required documentation</CardDescription>
+                  <CardTitle className="text-xl font-semibold text-gray-900">
+                    Required Documents
+                  </CardTitle>
+                  <CardDescription className="text-gray-600">
+                    Upload required documentation
+                  </CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -317,8 +401,12 @@ export default function PreboardPage() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="group border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gray-300 hover:bg-gray-50/50 transition-all duration-300 cursor-pointer">
                   <Upload className="w-8 h-8 text-gray-400 mx-auto mb-4 group-hover:text-gray-500 transition-colors duration-200" />
-                  <p className="text-sm font-medium text-gray-700 mb-2">Driver's License or ID</p>
-                  <p className="text-xs text-gray-500 mb-4">PNG, JPG or PDF up to 10MB</p>
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    Driver's License or ID
+                  </p>
+                  <p className="text-xs text-gray-500 mb-4">
+                    PNG, JPG or PDF up to 10MB
+                  </p>
                   <Button
                     type="button"
                     variant="outline"
@@ -330,8 +418,12 @@ export default function PreboardPage() {
                 </div>
                 <div className="group border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-gray-300 hover:bg-gray-50/50 transition-all duration-300 cursor-pointer">
                   <Upload className="w-8 h-8 text-gray-400 mx-auto mb-4 group-hover:text-gray-500 transition-colors duration-200" />
-                  <p className="text-sm font-medium text-gray-700 mb-2">I-9 Documentation</p>
-                  <p className="text-xs text-gray-500 mb-4">PNG, JPG or PDF up to 10MB</p>
+                  <p className="text-sm font-medium text-gray-700 mb-2">
+                    I-9 Documentation
+                  </p>
+                  <p className="text-xs text-gray-500 mb-4">
+                    PNG, JPG or PDF up to 10MB
+                  </p>
                   <Button
                     type="button"
                     variant="outline"
@@ -352,7 +444,9 @@ export default function PreboardPage() {
                 <Checkbox
                   id="agreement"
                   checked={formData.agreed}
-                  onCheckedChange={(checked) => handleInputChange("agreed", checked.toString())}
+                  onCheckedChange={(checked) =>
+                    handleInputChange("agreed", checked.toString())
+                  }
                   className="border-gray-300 data-[state=checked]:bg-gray-900 data-[state=checked]:border-gray-900 mt-1"
                 />
                 <div className="space-y-2">
@@ -363,9 +457,10 @@ export default function PreboardPage() {
                     I agree to the terms and conditions
                   </Label>
                   <p className="text-xs text-gray-500 leading-relaxed">
-                    By checking this box, I confirm that all information provided is accurate and I agree to TechCorp's
-                    employment terms and privacy policy. I understand that providing false information may result in
-                    termination of employment.
+                    By checking this box, I confirm that all information
+                    provided is accurate and I agree to MRAC's employment terms
+                    and privacy policy. I understand that providing false
+                    information may result in termination of employment.
                   </p>
                 </div>
               </div>
@@ -386,5 +481,5 @@ export default function PreboardPage() {
         </form>
       </main>
     </div>
-  )
+  );
 }
